@@ -38,6 +38,8 @@ public class SolvingBinaryTreeProblems {
         
         System.out.println("Nodes of root a : "+countNodes(a));
         System.out.println("Nodes of root c : "+countNodes(c));
+        
+        System.out.print("Max depth of tree " + a + " is " + maximumDepthOfTree(a) + "\n");
 
     }
     
@@ -49,6 +51,25 @@ public class SolvingBinaryTreeProblems {
         int rightNodes =  countNodes(root.getRightChild());    
         
         return 1+leftNodes + rightNodes;
+    }
+    
+    public static <T> int maximumDepthOfTree(Node<T> root){
+        if(root==null)
+            return 0;
+        
+        if(root.getLeftChild()==null && root.getRightChild()==null)
+        {
+            return 0;
+        }
+        
+        int leftMaxDepth =  maximumDepthOfTree(root.getLeftChild());
+        int rightMaxDepth =  maximumDepthOfTree(root.getRightChild());
+        
+        int max = 1 + Math.max(leftMaxDepth, rightMaxDepth);
+        
+        
+        return max;
+        
     }
     
 }
