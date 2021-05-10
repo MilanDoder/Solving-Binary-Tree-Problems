@@ -26,6 +26,17 @@ public class SolvingBinaryTreeProblems {
         Node<String> h = new Node<>("Hugo");
         Node<String> i = new Node<>("Irina"); 
         
+        
+        Node<Integer> aa = new Node<>(1);
+        Node<Integer> bb = new Node<>(2);
+        Node<Integer> cc = new Node<>(3);
+        Node<Integer> dd = new Node<>(4);
+        Node<Integer> ee = new Node<>(5);
+        Node<Integer> ff = new Node<>(6);
+        Node<Integer> gg = new Node<>(7);
+        Node<Integer> hh = new Node<>(8);
+        Node<Integer> ii = new Node<>(9); 
+        
         a.setLeftChild(b);
         a.setRightChild(c);
         
@@ -36,10 +47,26 @@ public class SolvingBinaryTreeProblems {
         f.setRightChild(h);
         h.setRightChild(i);
         
+        aa.setLeftChild(bb);
+        aa.setRightChild(cc);
+        
+        bb.setLeftChild(dd);
+        cc.setLeftChild(ee);
+        cc.setRightChild(ff);
+        ff.setLeftChild(gg);
+        ff.setRightChild(hh);
+        hh.setRightChild(ii);
+        
         System.out.println("Nodes of root a : "+countNodes(a));
         System.out.println("Nodes of root c : "+countNodes(c));
         
         System.out.print("Max depth of tree " + a + " is " + maximumDepthOfTree(a) + "\n");
+        int targetSum =7;
+        if(hasPathSum(aa, targetSum)){
+            System.out.print("In root has path with sum " + targetSum);
+        }else
+           System.out.print("In root has NOT path with sum " + targetSum);
+        System.out.println("");
 
     }
     
@@ -71,5 +98,23 @@ public class SolvingBinaryTreeProblems {
         return max;
         
     }
+    
+    public static boolean hasPathSum(Node<Integer> root, int currentSum ){
+        
+        if(root==null)
+            return false;
+        
+        if(root.getLeftChild()==null && root.getRightChild()==null){
+            System.out.println(root+" " +(currentSum==root.getData()));
+            return currentSum==root.getData();
+        }
+      //  System.out.println("SUM: " + root + "\t "+ currentSum +"\t" +(currentSum-root.getData()));
+        boolean leftPathSum = hasPathSum(root.getLeftChild(), currentSum - root.getData());
+        boolean rightPathSum =  hasPathSum(root.getRightChild(), currentSum - root.getData());
+        
+        boolean hasPath = leftPathSum || rightPathSum;
+        System.out.println(root + "\t left: " + leftPathSum + "\t right: "+ rightPathSum +" final:" + hasPath );
+        return  hasPath;
+        }
     
 }
