@@ -117,4 +117,16 @@ public class SolvingBinaryTreeProblems {
         return  hasPath;
         }
     
+    public static <T> void mirror(Node<T> root){
+        if(root==null)
+            return;
+        
+        Node<T> temp = root.getLeftChild();
+        
+        root.setLeftChild(root.getRightChild());
+        root.setRightChild(temp);
+        mirror(root.getLeftChild());
+        mirror(root.getRightChild());
+    }
+    
 }
