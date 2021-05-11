@@ -67,6 +67,12 @@ public class SolvingBinaryTreeProblems {
         }else
            System.out.print("In root has NOT path with sum " + targetSum);
         System.out.println("");
+        
+        
+        if(isFull(a)){
+            System.out.print(a +" is full tree");
+        }else
+            System.out.println(a + "is not full tree");
 
     }
     
@@ -127,6 +133,22 @@ public class SolvingBinaryTreeProblems {
         root.setRightChild(temp);
         mirror(root.getLeftChild());
         mirror(root.getRightChild());
+    }
+    
+    public static <T> boolean isFull(Node<T> root){
+        if(root==null){
+            return true;
+        }
+        
+        if(root.getLeftChild()==null && root.getRightChild()==null){
+            return true;
+        }
+        
+        if(root.getLeftChild()!=null && root.getRightChild()!=null){
+            return isFull(root.getLeftChild()) && isFull(root.getRightChild());
+        }
+        
+        return false;
     }
     
 }
