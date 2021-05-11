@@ -40,6 +40,8 @@ public class SolvingBinaryTreeProblems {
         a.setLeftChild(b);
         a.setRightChild(c);
         
+        System.out.print("\nTree is complete  " + isCompleteBinaryTree(a, 0, countNodes(a)) +"\n");
+        
         b.setLeftChild(d);
         c.setLeftChild(e);
         c.setRightChild(f);
@@ -73,6 +75,16 @@ public class SolvingBinaryTreeProblems {
             System.out.print(a +" is full tree");
         }else
             System.out.println(a + "is not full tree");
+        
+         if(isPerfect(a)){
+            System.out.print(a +" is perfect tree");
+        }else
+            System.out.println(a + "is not perfect full tree");
+         
+        if(isPerfect(f)){
+            System.out.print(f +" is perfect tree");
+        }else
+            System.out.println(f + "is not perfect full tree");
 
     }
     
@@ -135,6 +147,7 @@ public class SolvingBinaryTreeProblems {
         mirror(root.getRightChild());
     }
     
+    //every node have 2 child or dont have child
     public static <T> boolean isFull(Node<T> root){
         if(root==null){
             return true;
@@ -150,5 +163,57 @@ public class SolvingBinaryTreeProblems {
         
         return false;
     }
+    //every node have 2 child node and every leaf is the same level tree
+    public static <T> boolean isPerfectTree(Node<T> root, int leftDepth, int currentLevel){
+        
+        if(root==null)
+            return true;
+        
+        if(root.getLeftChild()==null && root.getRightChild()==null)
+        {
+            return currentLevel ==  leftDepth;
+        }
+        
+        if(root.getLeftChild()==null || root.getRightChild()==null)
+        {
+            return false;
+        }
+        
+        return isPerfectTree(root.getLeftChild(), leftDepth, currentLevel+1) &&
+                isPerfectTree(root.getRightChild(), leftDepth, currentLevel+1);
+    }
     
+    public static <T> int leftDepth(Node<T> root){
+        int leftDepth =0;
+        Node<T> node =root;
+        
+        while(node!=null){
+        
+            leftDepth++;
+            node = node.getLeftChild();
+        }        
+        
+        return leftDepth-1;
+    }    
+    
+    public  static <T> boolean isPerfect(Node<T> root){
+        int leftDepth = leftDepth(root);
+        return isPerfectTree(root, leftDepth, 0);
+    }
+    
+   
+    public static <T> boolean isCompleteBinaryTree(Node<T> root, int currNodeIndex, int totalNodes){
+        if(root==null)
+            return true;
+        
+         if(currNodeIndex>= totalNodes){
+             return false;
+         }
+         
+         int leftChildIndex = 2* currNodeIndex +1;
+         int rightChildIndex = 2* currNodeIndex +2;
+        
+        return isCompleteBinaryTree(root.getLeftChild(), leftChildIndex, totalNodes) &&
+                isCompleteBinaryTree(root.getRightChild(), rightChildIndex, totalNodes);
+    }
 }
